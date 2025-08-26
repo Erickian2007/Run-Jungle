@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://c3meag87h1d6f"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_imwnx"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"run",
+"speed": 5.0
+}]
+
+[node name="TemplateEnemies" type="CharacterBody2D"]
+scale = Vector2(2.5, 2.5)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_imwnx")
+animation = &"run"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]

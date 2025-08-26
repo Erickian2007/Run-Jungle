@@ -1,0 +1,43 @@
+[gd_scene load_steps=6 format=3 uid="uid://dbefj8vmn133y"]
+
+[ext_resource type="PackedScene" uid="uid://dujuiyinqamok" path="res://src/characters/player/player.tscn" id="1_avv2o"]
+[ext_resource type="Script" uid="uid://dep0hwkvdqqd3" path="res://src/core/bombs/Bombs.cs" id="2_ivtyw"]
+[ext_resource type="PackedScene" uid="uid://cghsu8hjrjuwu" path="res://src/objects/bomb/bomb.tscn" id="2_ukt3u"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_avv2o"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_avv2o"]
+size = Vector2(1608, 20)
+
+[node name="Main" type="Node2D"]
+
+[node name="Characters" type="Node2D" parent="."]
+
+[node name="Player" parent="Characters" instance=ExtResource("1_avv2o")]
+position = Vector2(64, 664)
+
+[node name="Core" type="Node2D" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="Core"]
+anchor_mode = 0
+
+[node name="Collisions" type="Node2D" parent="."]
+
+[node name="Floor" type="StaticBody2D" parent="Collisions"]
+physics_material_override = SubResource("PhysicsMaterial_avv2o")
+
+[node name="Collision" type="CollisionShape2D" parent="Collisions/Floor"]
+position = Vector2(804, 712)
+shape = SubResource("RectangleShape2D_avv2o")
+
+[node name="Bombs" type="Node2D" parent="."]
+position = Vector2(1264, 608)
+script = ExtResource("2_ivtyw")
+bomb_scene = ExtResource("2_ukt3u")
+
+[node name="bomb" parent="Bombs" instance=ExtResource("2_ukt3u")]
+inertia = 10.1
+
+[node name="Timer" type="Timer" parent="Bombs"]
+process_callback = 0
+autostart = true
