@@ -1,15 +1,77 @@
-[gd_scene load_steps=6 format=3 uid="uid://dbefj8vmn133y"]
+[gd_scene load_steps=13 format=3 uid="uid://dbefj8vmn133y"]
 
 [ext_resource type="PackedScene" uid="uid://dujuiyinqamok" path="res://src/characters/player/player.tscn" id="1_avv2o"]
+[ext_resource type="Script" uid="uid://hbbdhj2crw75" path="res://src/core/parallax/Parallax.cs" id="1_nlf45"]
 [ext_resource type="Script" uid="uid://dep0hwkvdqqd3" path="res://src/core/bombs/Bombs.cs" id="2_ivtyw"]
 [ext_resource type="PackedScene" uid="uid://cghsu8hjrjuwu" path="res://src/objects/bomb/bomb.tscn" id="2_ukt3u"]
+[ext_resource type="Texture2D" uid="uid://c4lekvwc6my7g" path="res://content/parallax background/plx-1.png" id="4_x62ka"]
+[ext_resource type="Texture2D" uid="uid://bdtytrl6x3ex1" path="res://content/parallax background/plx-2.png" id="5_2uitn"]
+[ext_resource type="Texture2D" uid="uid://bl7851sob0jw3" path="res://content/parallax background/plx-3.png" id="6_nlf45"]
+[ext_resource type="Texture2D" uid="uid://iayuf18eru5g" path="res://content/parallax background/plx-4.png" id="7_2in8s"]
+[ext_resource type="Texture2D" uid="uid://b1derge4eua8h" path="res://content/parallax background/plx-5.png" id="8_7o0du"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_avv2o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_avv2o"]
 size = Vector2(1608, 20)
 
-[node name="Main" type="Node2D"]
+[sub_resource type="LabelSettings" id="LabelSettings_nlf45"]
+font_size = 56
+
+[node name="Main" type="Node"]
+
+[node name="BG" type="Node2D" parent="."]
+
+[node name="Parallax2D" type="ParallaxBackground" parent="BG"]
+scale = Vector2(3.335, 3.335)
+transform = Transform2D(3.335, 0, 0, 3.335, 0, 0)
+script = ExtResource("1_nlf45")
+layersSpeed = PackedInt32Array(0, 10, 20, 40, 50)
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="BG/Parallax2D"]
+motion_offset = Vector2(12.365, 0)
+motion_mirroring = Vector2(384, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="BG/Parallax2D/ParallaxLayer"]
+texture_filter = 1
+texture = ExtResource("4_x62ka")
+centered = false
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="BG/Parallax2D"]
+motion_scale = Vector2(0.2, 0.2)
+motion_mirroring = Vector2(384, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="BG/Parallax2D/ParallaxLayer2"]
+texture_filter = 1
+texture = ExtResource("5_2uitn")
+centered = false
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="BG/Parallax2D"]
+motion_scale = Vector2(0.4, 0.4)
+motion_mirroring = Vector2(384, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="BG/Parallax2D/ParallaxLayer3"]
+texture_filter = 1
+texture = ExtResource("6_nlf45")
+centered = false
+
+[node name="ParallaxLayer4" type="ParallaxLayer" parent="BG/Parallax2D"]
+motion_scale = Vector2(0.6, 0.6)
+motion_mirroring = Vector2(384, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="BG/Parallax2D/ParallaxLayer4"]
+texture_filter = 1
+texture = ExtResource("7_2in8s")
+centered = false
+
+[node name="ParallaxLayer5" type="ParallaxLayer" parent="BG/Parallax2D"]
+motion_scale = Vector2(0.8, 0.8)
+motion_mirroring = Vector2(384, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="BG/Parallax2D/ParallaxLayer5"]
+texture_filter = 1
+texture = ExtResource("8_7o0du")
+centered = false
 
 [node name="Characters" type="Node2D" parent="."]
 
@@ -41,3 +103,33 @@ inertia = 10.1
 [node name="Timer" type="Timer" parent="Bombs"]
 process_callback = 0
 autostart = true
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Timer" type="Control" parent="UI"]
+layout_mode = 1
+anchor_left = 0.85
+anchor_right = 1.0
+anchor_bottom = 0.16666667
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="UI/Timer"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.19836956
+anchor_top = 0.15625
+anchor_right = 0.80163044
+anchor_bottom = 0.84375
+grow_horizontal = 2
+grow_vertical = 2
+text = "0:00"
+label_settings = SubResource("LabelSettings_nlf45")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
