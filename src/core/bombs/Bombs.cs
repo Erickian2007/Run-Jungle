@@ -5,13 +5,16 @@ public partial class Bombs : Node2D
 {
     [Export]
     public PackedScene bomb_scene;
-
-    public Timer timer;
-    public override void _Ready()
+    private bool canInstance = false;
+    public override void _Input(InputEvent @event)
     {
-        timer = GetNode<Timer>("Timer");
-        timer.Timeout += _TimerTimout;
-        base._Ready();
+        if (@event is InputEventKey keyEvent && keyEvent.Pressed)
+        {
+            if (keyEvent.Keycode == Key.Space || keyEvent.Keycode == Key.Up)
+            {
+                canInstance = true;
+            }
+        }
     }
     public void InstanceBombs()
     {
@@ -21,7 +24,10 @@ public partial class Bombs : Node2D
 
     public void _TimerTimout()
     {
-        InstanceBombs();
+        if (canInstance)
+        {
+            InstanceBombs();
+        }
     }
     
 }

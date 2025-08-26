@@ -6,7 +6,7 @@ public partial class Parallax : ParallaxBackground
     [Export]
     public float speed = -0.5f;
     [Export]
-    public bool canMove = true;
+    public bool canMove = false;
     [Export]
     private int[] layersSpeed;
 
@@ -23,5 +23,15 @@ public partial class Parallax : ParallaxBackground
             }
         }
         base._Process(delta);
+    }
+    public override void _Input(InputEvent @event)
+    {
+        if (@event is InputEventKey keyEvent && keyEvent.Pressed)
+        {
+            if (keyEvent.Keycode == Key.Space || keyEvent.Keycode == Key.Up)
+            {
+                canMove = true;
+            }
+        }
     }
 }
