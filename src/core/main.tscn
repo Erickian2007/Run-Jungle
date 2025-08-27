@@ -8,14 +8,13 @@
 [ext_resource type="Texture2D" uid="uid://bdtytrl6x3ex1" path="res://content/parallax background/plx-2.png" id="5_2uitn"]
 [ext_resource type="Texture2D" uid="uid://bl7851sob0jw3" path="res://content/parallax background/plx-3.png" id="6_nlf45"]
 [ext_resource type="Texture2D" uid="uid://iayuf18eru5g" path="res://content/parallax background/plx-4.png" id="7_2in8s"]
+[ext_resource type="PackedScene" uid="uid://drewldga17eyf" path="res://src/objects/map/chunks/chunk_1.tscn" id="7_7561f"]
 [ext_resource type="Texture2D" uid="uid://b1derge4eua8h" path="res://content/parallax background/plx-5.png" id="8_7o0du"]
 [ext_resource type="Script" uid="uid://cnjy10n6vvoma" path="res://src/core/ui/timer/Timer.cs" id="10_2in8s"]
 [ext_resource type="Script" uid="uid://du0kqgwns3ce5" path="res://src/core/ui/initial/Initial.cs" id="11_7o0du"]
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_avv2o"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_avv2o"]
-size = Vector2(1608, 20)
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_7561f"]
+b = Vector2(0, 157)
 
 [sub_resource type="LabelSettings" id="LabelSettings_nlf45"]
 font_size = 56
@@ -181,24 +180,40 @@ texture_filter = 1
 texture = ExtResource("8_7o0du")
 centered = false
 
+[node name="Chucks" type="Node2D" parent="."]
+position = Vector2(0, 640)
+
+[node name="Pieces" type="Node2D" parent="Chucks"]
+
+[node name="chunk1" parent="Chucks/Pieces" instance=ExtResource("7_7561f")]
+
+[node name="Checks" type="Node2D" parent="Chucks"]
+
+[node name="Initial" type="Area2D" parent="Chucks/Checks"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Chucks/Checks/Initial"]
+shape = SubResource("SegmentShape2D_7561f")
+
+[node name="End" type="Area2D" parent="Chucks/Checks"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Chucks/Checks/End"]
+position = Vector2(1281, 0)
+shape = SubResource("SegmentShape2D_7561f")
+
+[node name="InstaceFloor" type="Marker2D" parent="Chucks"]
+position = Vector2(1280, 0)
+
+[node name="chunk1" parent="Chucks/InstaceFloor" instance=ExtResource("7_7561f")]
+
 [node name="Characters" type="Node2D" parent="."]
 
 [node name="Player" parent="Characters" instance=ExtResource("1_avv2o")]
-position = Vector2(64, 664)
+position = Vector2(88, 610)
 
 [node name="Core" type="Node2D" parent="."]
 
 [node name="Camera2D" type="Camera2D" parent="Core"]
 anchor_mode = 0
-
-[node name="Collisions" type="Node2D" parent="."]
-
-[node name="Floor" type="StaticBody2D" parent="Collisions"]
-physics_material_override = SubResource("PhysicsMaterial_avv2o")
-
-[node name="Collision" type="CollisionShape2D" parent="Collisions/Floor"]
-position = Vector2(804, 712)
-shape = SubResource("RectangleShape2D_avv2o")
 
 [node name="Bombs" type="Node2D" parent="."]
 position = Vector2(1264, 608)
