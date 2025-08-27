@@ -5,7 +5,8 @@ using System.Runtime.Serialization.Formatters;
 
 public partial class Pieces : Node2D
 {
-    public Marker2D instaceFloor;
+    public Timer Timer;
+    public Marker2D NewChuckPosition;
 
     [Export]
     public double speed = 1.0;
@@ -13,55 +14,26 @@ public partial class Pieces : Node2D
     public int maxChucks = 3;
     [Export]
     public bool canMove = false;
-
-    public List<ChuckCore> chucks = new List<ChuckCore>();
     public override void _Ready()
     {
-        instaceFloor = GetNode<Marker2D>("InstanceFloor");
-        base._Ready();
-    }
-    public override void _Process(double delta)
-    {
-        TranslateChucks(delta);
-        CreateChucks();
-
-        base._Process(delta);
-    }
-    public override void _Input(InputEvent @event)
-    {
-        if (@event is InputEventKey keyEvent && keyEvent.Pressed)
+        Timer = GetNodeOrNull<Timer>("Timer");
+        Timer.Start(2.0f);
+        NewChuckPosition = GetNodeOrNull<Marker2D>("NewChuckPosition");
+        Timer.Timeout += () =>
         {
-            if (keyEvent.Keycode == Key.Space || keyEvent.Keycode == Key.Up)
+            if (this.GetChildCount() < maxChucks)
             {
-                canMove = true;
+                CreateChucks();
             }
-        }
-    }
-    public void TranslateChucks(double delta)
-    {
-        if (!canMove) return;
-        Vector2 position = this.Position;
-        position.X -= (float)(speed * delta);
-        this.Position = position;
-        base._Process(delta);
+        };
+        base._Ready();
     }
     public void CreateChucks()
     {
-        if (chucks.Count >= maxChucks) return;
-        for (int i = 0; i < this.GetChildCount(); i++)
-        {
-            var slot = GetChild<SlotPositionSystem>(i);
-            if (slot.clean)
-            {
-                PackedScene chuckFloor = GD.Load<PackedScene>("res://src/objects/map/chunks/chunk_1.tscn");
-                ChuckCore chuckFloorInstance = chuckFloor.Instantiate<ChuckCore>();
-                // Adiciona o ChuckCore como filho do nó atual
-                slot.AddChild(chuckFloorInstance);
-                slot.clean = false;
-                break;
-            }
-        }
-        // Instancia o ChuckCore
-
+        PackedScene chuckFloor = GD.Load<PackedScene>("res://src/objects/map/chunks/chunk_1.tscn");
+        ChuckCore chuckFloorInstance = chuckFloor.Instantiate<ChuckCore>();
+        chuckFloorInstance.Position = NewChuckPosition.Position;
+        // Adiciona o ChuckCore como filho do nó atual
+        this.AddChild(chuckFloorInstance);
     }
 }

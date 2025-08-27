@@ -12,7 +12,7 @@ public partial class Parallax : ParallaxBackground
 
     public override void _Process(double delta)
     {
-        if (canMove)
+        if (GameSystem.IsGameStarted && canMove)
         {
             for (int i = 0; i < GetChildCount(); i++)
             {
@@ -23,15 +23,5 @@ public partial class Parallax : ParallaxBackground
             }
         }
         base._Process(delta);
-    }
-    public override void _Input(InputEvent @event)
-    {
-        if (@event is InputEventKey keyEvent && keyEvent.Pressed)
-        {
-            if (keyEvent.Keycode == Key.Space || keyEvent.Keycode == Key.Up)
-            {
-                canMove = true;
-            }
-        }
     }
 }

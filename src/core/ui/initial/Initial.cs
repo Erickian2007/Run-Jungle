@@ -7,20 +7,18 @@ public partial class Initial : Control
     public override void _Ready()
     {
         Anim = GetNodeOrNull<AnimationPlayer>("AnimationPlayer");
-        base._Ready();
-    }
-    public override void _Input(InputEvent @event)
-    {
-        if (@event is InputEventKey keyEvent && keyEvent.Pressed)
+        // Assuming you have an instance of GameSystem, for example as a singleton or node
+        var gameSystem = GetNodeOrNull<GameSystem>("/root/GameSystem");
+        if (gameSystem != null)
         {
-            if (keyEvent.Keycode == Key.Space || keyEvent.Keycode == Key.Up)
+            gameSystem.StartGame += () =>
             {
                 if (Anim != null)
                 {
                     Anim.Play("hide");
-                }    
-            }
+                }
+            };
         }
-        base._Input(@event);
+        base._Ready();
     }
 }
