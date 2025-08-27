@@ -184,15 +184,18 @@ position = Vector2(0, 640)
 [node name="Pieces" type="Node2D" parent="Chucks"]
 script = ExtResource("7_0g4b3")
 speed = 100.0
+maxChucks = 6
 
 [node name="Timer" type="Timer" parent="Chucks/Pieces"]
-wait_time = 1.335
-autostart = true
+wait_time = 7.0
 
 [node name="NewChuckPosition" type="Marker2D" parent="Chucks/Pieces"]
 position = Vector2(1280, 0)
 
 [node name="chunk1" parent="Chucks/Pieces" instance=ExtResource("7_7561f")]
+
+[node name="chunk2" parent="Chucks/Pieces" instance=ExtResource("7_7561f")]
+position = Vector2(1280, 0)
 
 [node name="Characters" type="Node2D" parent="."]
 

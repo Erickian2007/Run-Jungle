@@ -17,14 +17,15 @@ public partial class Pieces : Node2D
     public override void _Ready()
     {
         Timer = GetNodeOrNull<Timer>("Timer");
-        Timer.Start(2.0f);
         NewChuckPosition = GetNodeOrNull<Marker2D>("NewChuckPosition");
+        Timer.Start();
         Timer.Timeout += () =>
         {
+            GD.Print("Timeout");
             if (this.GetChildCount() < maxChucks)
             {
                 CreateChucks();
-            }
+            }   
         };
         base._Ready();
     }
@@ -34,6 +35,6 @@ public partial class Pieces : Node2D
         ChuckCore chuckFloorInstance = chuckFloor.Instantiate<ChuckCore>();
         chuckFloorInstance.Position = NewChuckPosition.Position;
         // Adiciona o ChuckCore como filho do nó atual
-        this.AddChild(chuckFloorInstance);
+        this.CallDeferred("add_child", chuckFloorInstance);
     }
 }

@@ -3,9 +3,12 @@ using System;
 
 public partial class Bomb : RigidBody2D
 {
+    VisibleOnScreenNotifier2D visibleOnScreenNotifier2D;
     public override void _Ready()
     {
         InitialForce();
+        visibleOnScreenNotifier2D = GetNodeOrNull<VisibleOnScreenNotifier2D>("VisibleNotifier");
+        this.visibleOnScreenNotifier2D.ScreenExited += () => QueueFree();
         base._Ready();
     }
 

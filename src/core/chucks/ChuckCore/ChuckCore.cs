@@ -22,7 +22,8 @@ public partial class ChuckCore : Node2D
     }
     public override void _Process(double delta)
     {
-        TranslateChucks(delta);
+        if (!GameSystem.IsGameStarted) return;
+            TranslateChucks(delta);
     }
     public void TranslateChucks(double delta)
     {
