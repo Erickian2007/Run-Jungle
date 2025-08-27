@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dbefj8vmn133y"]
+[gd_scene load_steps=22 format=3 uid="uid://dbefj8vmn133y"]
 
 [ext_resource type="PackedScene" uid="uid://dujuiyinqamok" path="res://src/characters/player/player.tscn" id="1_avv2o"]
 [ext_resource type="Script" uid="uid://hbbdhj2crw75" path="res://src/core/parallax/Parallax.cs" id="1_nlf45"]
@@ -7,9 +7,11 @@
 [ext_resource type="Texture2D" uid="uid://c4lekvwc6my7g" path="res://content/parallax background/plx-1.png" id="4_x62ka"]
 [ext_resource type="Texture2D" uid="uid://bdtytrl6x3ex1" path="res://content/parallax background/plx-2.png" id="5_2uitn"]
 [ext_resource type="Texture2D" uid="uid://bl7851sob0jw3" path="res://content/parallax background/plx-3.png" id="6_nlf45"]
+[ext_resource type="Script" uid="uid://x1bvuq2w0k5n" path="res://src/core/chucks/Pieces/Pieces.cs" id="7_0g4b3"]
 [ext_resource type="Texture2D" uid="uid://iayuf18eru5g" path="res://content/parallax background/plx-4.png" id="7_2in8s"]
 [ext_resource type="PackedScene" uid="uid://drewldga17eyf" path="res://src/objects/map/chunks/chunk_1.tscn" id="7_7561f"]
 [ext_resource type="Texture2D" uid="uid://b1derge4eua8h" path="res://content/parallax background/plx-5.png" id="8_7o0du"]
+[ext_resource type="Script" uid="uid://cewjsvw00cggu" path="res://src/core/chucks/Pieces/slot_positions/SlotPositionSystem.cs" id="8_x6e73"]
 [ext_resource type="Script" uid="uid://cnjy10n6vvoma" path="res://src/core/ui/timer/Timer.cs" id="10_2in8s"]
 [ext_resource type="Script" uid="uid://du0kqgwns3ce5" path="res://src/core/ui/initial/Initial.cs" id="11_7o0du"]
 
@@ -184,26 +186,38 @@ centered = false
 position = Vector2(0, 640)
 
 [node name="Pieces" type="Node2D" parent="Chucks"]
+script = ExtResource("7_0g4b3")
+speed = 100.0
 
-[node name="chunk1" parent="Chucks/Pieces" instance=ExtResource("7_7561f")]
+[node name="SlotPosition" type="Node2D" parent="Chucks/Pieces"]
+script = ExtResource("8_x6e73")
+
+[node name="chunk1" parent="Chucks/Pieces/SlotPosition" instance=ExtResource("7_7561f")]
+
+[node name="SlotPosition2" type="Node2D" parent="Chucks/Pieces"]
+position = Vector2(1280, 0)
+script = ExtResource("8_x6e73")
+
+[node name="chunk1" parent="Chucks/Pieces/SlotPosition2" instance=ExtResource("7_7561f")]
+
+[node name="SlotPosition3" type="Node2D" parent="Chucks/Pieces"]
+position = Vector2(2560, 0)
+script = ExtResource("8_x6e73")
+
+[node name="chunk1" parent="Chucks/Pieces/SlotPosition3" instance=ExtResource("7_7561f")]
 
 [node name="Checks" type="Node2D" parent="Chucks"]
-
-[node name="Initial" type="Area2D" parent="Chucks/Checks"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Chucks/Checks/Initial"]
-shape = SubResource("SegmentShape2D_7561f")
 
 [node name="End" type="Area2D" parent="Chucks/Checks"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Chucks/Checks/End"]
-position = Vector2(1281, 0)
 shape = SubResource("SegmentShape2D_7561f")
 
-[node name="InstaceFloor" type="Marker2D" parent="Chucks"]
-position = Vector2(1280, 0)
+[node name="Initial" type="Area2D" parent="Chucks/Checks"]
 
-[node name="chunk1" parent="Chucks/InstaceFloor" instance=ExtResource("7_7561f")]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Chucks/Checks/Initial"]
+position = Vector2(1281, 0)
+shape = SubResource("SegmentShape2D_7561f")
 
 [node name="Characters" type="Node2D" parent="."]
 
