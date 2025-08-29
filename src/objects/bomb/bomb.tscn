@@ -1,8 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://cghsu8hjrjuwu"]
+[gd_scene load_steps=15 format=3 uid="uid://cghsu8hjrjuwu"]
 
 [ext_resource type="Texture2D" uid="uid://bma3ltd4sd14f" path="res://content/0x72_DungeonTilesetII_v1.7/frames/bomb_f1.png" id="1_0ip54"]
 [ext_resource type="Script" uid="uid://cja8caoug3h75" path="res://src/objects/bomb/Bomb.cs" id="1_maqcl"]
 [ext_resource type="Texture2D" uid="uid://b1vlu8tumfcgx" path="res://content/0x72_DungeonTilesetII_v1.7/frames/bomb_f2.png" id="2_maqcl"]
+[ext_resource type="Texture2D" uid="uid://dc6wk8wslqdl8" path="res://content/Super Pixel Effects Mini Pack 1/PNG/fx1_explosion_small_orange/frame0000.png" id="4_56vg7"]
+[ext_resource type="Texture2D" uid="uid://bp7k1bqnckgsh" path="res://content/Super Pixel Effects Mini Pack 1/PNG/fx1_explosion_small_orange/frame0001.png" id="5_6bjgw"]
+[ext_resource type="Texture2D" uid="uid://cj4vfkj0ogihx" path="res://content/Super Pixel Effects Mini Pack 1/PNG/fx1_explosion_small_orange/frame0003.png" id="6_vvds3"]
+[ext_resource type="Texture2D" uid="uid://cga87h0lpyshq" path="res://content/Super Pixel Effects Mini Pack 1/PNG/fx1_explosion_small_orange/frame0007.png" id="7_hn717"]
+[ext_resource type="Texture2D" uid="uid://dpn25y0676wlq" path="res://content/Super Pixel Effects Mini Pack 1/PNG/fx1_explosion_small_orange/frame0009.png" id="8_k5yqg"]
+[ext_resource type="Script" uid="uid://bll68rq1jfij6" path="res://src/objects/bomb/VerifyCollision.cs" id="9_6bjgw"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_0ip54"]
 friction = 0.51
@@ -24,6 +30,32 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_dhf3y"]
 radius = 5.21536
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_gnua2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_56vg7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_6bjgw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_vvds3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_hn717")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_k5yqg")
+}],
+"loop": false,
+"name": &"explode",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_56vg7"]
+radius = 16.03122
+
 [node name="bomb" type="RigidBody2D"]
 mass = 0.183
 physics_material_override = SubResource("PhysicsMaterial_0ip54")
@@ -34,7 +66,7 @@ texture_filter = 1
 scale = Vector2(2.5, 2.5)
 sprite_frames = SubResource("SpriteFrames_rxrs1")
 autoplay = "default"
-frame_progress = 0.975233
+frame_progress = 0.88195324
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(4, 4)
@@ -42,3 +74,18 @@ scale = Vector2(2.5, 2.5)
 shape = SubResource("CircleShape2D_dhf3y")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[node name="Effects" type="AnimatedSprite2D" parent="."]
+visible = false
+texture_filter = 1
+position = Vector2(3.9999998, 3.9999998)
+scale = Vector2(1.965, 1.965)
+sprite_frames = SubResource("SpriteFrames_gnua2")
+animation = &"explode"
+
+[node name="Area2D" type="Area2D" parent="."]
+script = ExtResource("9_6bjgw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(4, 4)
+shape = SubResource("CircleShape2D_56vg7")

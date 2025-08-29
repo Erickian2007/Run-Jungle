@@ -29,7 +29,7 @@ public partial class ChuckCore : Node2D
     {
         if (!canMove) return;
         Vector2 position = this.Position;
-        position.X -= (float)(speed * delta);
+        position.X -= (float)(speed * delta + (GameSystem.elapsedTime / 10));
         this.Position = position;
         base._Process(delta);
     }

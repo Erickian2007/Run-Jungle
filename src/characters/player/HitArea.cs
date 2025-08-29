@@ -7,6 +7,7 @@ public partial class HitArea : Area2D
     AnimationPlayer Anim;
     public override void _Ready()
     {
+        this.AddToGroup("player");
         Parent = GetParent<CharacterBody2D>();
         Anim = Parent.GetNode<AnimationPlayer>("AnimationPlayer");
         this.BodyEntered += BombHit; 

@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Data.Common;
 
 public partial class Player : CharacterBody2D
 {
@@ -10,6 +11,7 @@ public partial class Player : CharacterBody2D
     private bool jumped = false;
     public override void _Ready()
     {
+        this.AddToGroup("player");
         _anim = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
     }
 
@@ -30,12 +32,17 @@ public partial class Player : CharacterBody2D
         {
             if (IsOnFloor())
             {
-                _anim.Play("run");
                 jumped = true;
                 Velocity = new Vector2(0, jumpForce);
+                if (_anim.Animation == "run") return;
+                _anim.Play("run");
             }
         }
-
+        while (_anim.SpeedScale <= 4.0f)
+        {
+            _anim.SpeedScale += 0.01f * (float)GameSystem.elapsedTime;
+            break;
+        }
         this.MoveAndSlide();
     }
 }

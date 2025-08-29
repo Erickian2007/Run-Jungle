@@ -3,7 +3,6 @@
 [ext_resource type="PackedScene" uid="uid://dujuiyinqamok" path="res://src/characters/player/player.tscn" id="1_avv2o"]
 [ext_resource type="Script" uid="uid://hbbdhj2crw75" path="res://src/core/parallax/Parallax.cs" id="1_nlf45"]
 [ext_resource type="Script" uid="uid://dep0hwkvdqqd3" path="res://src/core/bombs/Bombs.cs" id="2_ivtyw"]
-[ext_resource type="PackedScene" uid="uid://cghsu8hjrjuwu" path="res://src/objects/bomb/bomb.tscn" id="2_ukt3u"]
 [ext_resource type="Texture2D" uid="uid://c4lekvwc6my7g" path="res://content/parallax background/plx-1.png" id="4_x62ka"]
 [ext_resource type="Texture2D" uid="uid://bdtytrl6x3ex1" path="res://content/parallax background/plx-2.png" id="5_2uitn"]
 [ext_resource type="Texture2D" uid="uid://bl7851sob0jw3" path="res://content/parallax background/plx-3.png" id="6_nlf45"]
@@ -11,8 +10,9 @@
 [ext_resource type="Texture2D" uid="uid://iayuf18eru5g" path="res://content/parallax background/plx-4.png" id="7_2in8s"]
 [ext_resource type="PackedScene" uid="uid://drewldga17eyf" path="res://src/objects/map/chunks/chunk_1.tscn" id="7_7561f"]
 [ext_resource type="Texture2D" uid="uid://b1derge4eua8h" path="res://content/parallax background/plx-5.png" id="8_7o0du"]
-[ext_resource type="Script" uid="uid://cnjy10n6vvoma" path="res://src/core/ui/timer/Timer.cs" id="10_2in8s"]
+[ext_resource type="PackedScene" uid="uid://cghsu8hjrjuwu" path="res://src/objects/bomb/bomb.tscn" id="11_0g4b3"]
 [ext_resource type="Script" uid="uid://du0kqgwns3ce5" path="res://src/core/ui/initial/Initial.cs" id="11_7o0du"]
+[ext_resource type="Script" uid="uid://cihny57jfle4u" path="res://src/core/ui/TimerCount.cs" id="12_0g4b3"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_nlf45"]
 font_size = 56
@@ -131,6 +131,7 @@ _data = {
 scale = Vector2(3.335, 3.335)
 transform = Transform2D(3.335, 0, 0, 3.335, 0, 0)
 script = ExtResource("1_nlf45")
+canMove = true
 layersSpeed = PackedInt32Array(0, 10, 20, 40, 50)
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="BG/Parallax2D"]
@@ -210,7 +211,8 @@ anchor_mode = 0
 [node name="Bombs" type="Node2D" parent="."]
 position = Vector2(1264, 608)
 script = ExtResource("2_ivtyw")
-bomb_scene = ExtResource("2_ukt3u")
+spawn_interval = 5
+bomb_scene = ExtResource("11_0g4b3")
 
 [node name="Timer" type="Timer" parent="Bombs"]
 process_callback = 0
@@ -224,28 +226,19 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Temp" type="Control" parent="UI"]
-layout_mode = 1
-anchor_left = 0.79375
-anchor_top = 0.033333335
-anchor_right = 0.94375
-anchor_bottom = 0.2
-script = ExtResource("10_2in8s")
-metadata/_edit_use_anchors_ = true
-
-[node name="Label" type="Label" parent="UI/Temp"]
+[node name="TimerCount" type="Label" parent="UI"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.19836956
-anchor_top = 0.15625
-anchor_right = 0.80163044
-anchor_bottom = 0.84375
+anchor_left = 0.8125
+anchor_right = 0.9970108
+anchor_bottom = 0.11111111
 grow_horizontal = 2
 grow_vertical = 2
 text = "00:00:00"
 label_settings = SubResource("LabelSettings_nlf45")
 horizontal_alignment = 1
 vertical_alignment = 1
+script = ExtResource("12_0g4b3")
 metadata/_edit_use_anchors_ = true
 
 [node name="Initial" type="Control" parent="UI"]
@@ -287,5 +280,3 @@ libraries = {
 }
 autoplay = "default"
 speed_scale = 0.35
-
-[connection signal="timeout" from="Bombs/Timer" to="Bombs" method="_TimerTimout"]
